@@ -5,13 +5,21 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using TinyLisp.Objects;
 
 namespace TinyLisp
 {
     public partial class frmObjects : Form
     {
-        private string[] langObjects = { "NumberObject", "StringObject", "LogicObject", "SymbolObject", "LambdaObject", "ListObject" };
-        private string[] objectsDesc = { "Число", "Строка", "Логика", "Символ", "Лямбда", "Список" };
+        private string[] langObjects = { 
+                "NumberObject", "StringObject", "LogicObject", 
+                "SymbolObject", "LambdaObject", "ListObject" 
+        };
+
+        private string[] objectsDesc = { 
+            "Число", "Строка", "Логика", 
+            "Символ", "Лямбда", "Список"
+        };
 
         long prevObjectsHashSum;
 

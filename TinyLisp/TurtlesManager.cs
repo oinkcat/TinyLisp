@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// Управляет созданием окна графики
+/// </summary>
 static class TurtlesManager
 {
     public static TinyLisp.frmGraphics GraphicForm;

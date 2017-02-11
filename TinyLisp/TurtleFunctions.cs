@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Collections.Generic;
 using System.Text;
+using TinyLisp;
+using TinyLisp.Objects;
 
 public static class TurtleFunctions
 {

@@ -1,58 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class NumberObject : BaseObject
+namespace TinyLisp.Objects
 {
-    public double Value;
-
-    #region Числовые функции
-
-    public delegate NumberObject NumberFunction(NumberObject First, NumberObject Other);
-
-    public static NumberObject DoAdd(NumberObject First, NumberObject Other)
+    public class NumberObject : BaseObject
     {
-        return new NumberObject(First.Value + Other.Value);
-    }
+        public double Value;
 
-    public static NumberObject DoSub(NumberObject First, NumberObject Other)
-    {
-        return new NumberObject(First.Value - Other.Value);
-    }
+        #region Числовые функции
 
-    public static NumberObject DoMul(NumberObject First, NumberObject Other)
-    {
-        return new NumberObject(First.Value * Other.Value);
-    }
+        public delegate NumberObject NumberFunction(NumberObject First, NumberObject Other);
 
-    public static NumberObject DoDiv(NumberObject First, NumberObject Other)
-    {
-        return new NumberObject(First.Value / Other.Value);
-    }
+        public static NumberObject DoAdd(NumberObject First, NumberObject Other)
+        {
+            return new NumberObject(First.Value + Other.Value);
+        }
 
-    public static NumberObject DoCompare(NumberObject First, NumberObject Other)
-    {
-        return new NumberObject(First.Value.CompareTo(Other.Value));
-    }
+        public static NumberObject DoSub(NumberObject First, NumberObject Other)
+        {
+            return new NumberObject(First.Value - Other.Value);
+        }
 
-    #endregion
+        public static NumberObject DoMul(NumberObject First, NumberObject Other)
+        {
+            return new NumberObject(First.Value * Other.Value);
+        }
 
-    public NumberObject(NumberObject obj)
-    {
-        Value = obj.Value;
-    }
+        public static NumberObject DoDiv(NumberObject First, NumberObject Other)
+        {
+            return new NumberObject(First.Value / Other.Value);
+        }
 
-    public NumberObject(double Number)
-    {
-        Value = Number;
-    }
+        public static NumberObject DoCompare(NumberObject First, NumberObject Other)
+        {
+            return new NumberObject(First.Value.CompareTo(Other.Value));
+        }
 
-    public override string ToString()
-    {
-        return Value.ToString();
-    }
+        #endregion
 
-    public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
-    {
-        return this;
+        public NumberObject(NumberObject obj)
+        {
+            Value = obj.Value;
+        }
+
+        public NumberObject(double Number)
+        {
+            Value = Number;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
+        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
+        {
+            return this;
+        }
     }
 }

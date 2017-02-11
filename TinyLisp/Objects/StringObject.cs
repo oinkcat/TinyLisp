@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class StringObject : BaseObject
+namespace TinyLisp.Objects
 {
-    public string Value;
-
-    public StringObject(string Value)
+    public class StringObject : BaseObject
     {
-        this.Value = Value;
-    }
+        public string Value;
 
-    public override string ToString()
-    {
-        return Value;
-    }
+        public StringObject(string Value)
+        {
+            this.Value = Value;
+        }
 
-    public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
-    {
-        return this;
+        public override string ToString()
+        {
+            return Value;
+        }
+
+        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
+        {
+            return this;
+        }
     }
 }

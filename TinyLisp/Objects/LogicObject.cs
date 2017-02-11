@@ -1,43 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class LogicObject : BaseObject
+namespace TinyLisp.Objects
 {
-    public bool Value;
-
-    #region Логические функции
-
-    public delegate LogicObject LogicFunction(LogicObject First, LogicObject Other);
-
-    public static LogicObject DoOr(LogicObject First, LogicObject Other)
+    public class LogicObject : BaseObject
     {
-        return new LogicObject(First.Value || Other.Value);
-    }
+        public bool Value;
 
-    public static LogicObject DoAnd(LogicObject First, LogicObject Other)
-    {
-        return new LogicObject(First.Value && Other.Value);
-    }
+        #region Логические функции
 
-    public static LogicObject DoNot(LogicObject Value)
-    {
-        return new LogicObject(!Value.Value);
-    }
+        public delegate LogicObject LogicFunction(LogicObject First, LogicObject Other);
 
-    #endregion
+        public static LogicObject DoOr(LogicObject First, LogicObject Other)
+        {
+            return new LogicObject(First.Value || Other.Value);
+        }
 
-    public LogicObject(bool Value)
-    {
-        this.Value = Value;
-    }
+        public static LogicObject DoAnd(LogicObject First, LogicObject Other)
+        {
+            return new LogicObject(First.Value && Other.Value);
+        }
 
-    public override string ToString()
-    {
-        return Value ? "#t" : "#f";
-    }
+        public static LogicObject DoNot(LogicObject Value)
+        {
+            return new LogicObject(!Value.Value);
+        }
 
-    public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
-    {
-        return this;
+        #endregion
+
+        public LogicObject(bool Value)
+        {
+            this.Value = Value;
+        }
+
+        public override string ToString()
+        {
+            return Value ? "#t" : "#f";
+        }
+
+        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
+        {
+            return this;
+        }
     }
 }

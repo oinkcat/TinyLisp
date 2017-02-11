@@ -3,17 +3,23 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
 
-class Turtle
+/// <summary>
+/// "Черепашка", рисующая графику
+/// </summary>
+internal class Turtle
 {
     private Graphics myGraphics;
     private Pen myPen;
-    private const int WIDTH = 640, HEIGHT = 480;
+
+    // Размеры области рисования
+    private const int Width = 640;
+    private const int Height= 480;
 
     private double x, y;
     private double pX, pY;
     private double rot;
 
-    private bool painting;
+    private bool isPainting;
 
     public double X 
     {
@@ -32,12 +38,12 @@ class Turtle
 
     public bool Painting
     {
-        get { return this.painting; }
+        get { return this.isPainting; }
         set 
         {
             this.pX = this.x;
             this.pY = this.y;
-            this.painting = value;
+            this.isPainting = value;
         }
     }
 
@@ -75,23 +81,23 @@ class Turtle
 
     public void Erase()
     {
-        myGraphics.FillRectangle(Brushes.White, 0, 0, WIDTH, HEIGHT);
+        myGraphics.FillRectangle(Brushes.White, 0, 0, Width, Height);
     }
 
     private void ControlMoving()
     {
-        bool outOfBounds = x < 0 || y < 0 || x > WIDTH || y > HEIGHT;
-        if (x > WIDTH)
+        bool outOfBounds = x < 0 || y < 0 || x > Width || y > Height;
+        if (x > Width)
             x = 0;
-        if (y > HEIGHT)
+        if (y > Height)
             y = 0;
         if (x < 0)
-            x = WIDTH;
+            x = Width;
         if (y < 0)
-            y = HEIGHT;
+            y = Height;
         if(outOfBounds)
             StorePreviousPosition();
-        if (this.painting)
+        if (this.isPainting)
         {
             DrawTrack();
         }
@@ -99,8 +105,8 @@ class Turtle
 
     public void MoveTo(double X, double Y)
     {
-        this.x = X + WIDTH / 2;
-        this.y = HEIGHT - (Y + HEIGHT / 2);
+        this.x = X + Width / 2;
+        this.y = Height - (Y + Height / 2);
         ControlMoving();
     }
 
@@ -120,7 +126,7 @@ class Turtle
 
     public Turtle(Graphics g)
     {
-        this.painting = false;
+        this.isPainting = false;
         this.myGraphics = g;
         this.myPen = new Pen(Color.Black, 1);
         rot = -Math.PI / 2;

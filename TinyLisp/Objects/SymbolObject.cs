@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class SymbolObject : BaseObject
+namespace TinyLisp.Objects
 {
-    public SymbolObject(string Name)
+    public class SymbolObject : BaseObject
     {
-        this.Name = Name;
-    }
+        public SymbolObject(string Name)
+        {
+            this.Name = Name;
+        }
 
-    public override string ToString()
-    {
-        return Name;
-    }
+        public override string ToString()
+        {
+            return Name;
+        }
 
-    public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
-    {
-        return !this.Quoted ? Environment.GetObject(this.Name) : this;
+        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
+        {
+            return !this.Quoted ? Environment.GetObject(this.Name) : this;
+        }
     }
 }

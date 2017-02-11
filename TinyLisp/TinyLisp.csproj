@@ -85,7 +85,7 @@
     <Compile Include="Objects\BaseObject.cs" />
     <Compile Include="Objects\FunctionObject.cs" />
     <Compile Include="Objects\LambdaObject.cs" />
-    <Compile Include="Objects\LispEnvironment.cs" />
+    <Compile Include="LispEnvironment.cs" />
     <Compile Include="Objects\ListObject.cs" />
     <Compile Include="Objects\LogicObject.cs" />
     <Compile Include="Objects\NumberObject.cs" />
