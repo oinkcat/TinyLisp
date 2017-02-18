@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TinyLisp;
 
 /// <summary>
 /// Управляет созданием окна графики
 /// </summary>
-static class TurtlesManager
+public static class TurtlesManager
 {
-    public static TinyLisp.frmGraphics GraphicForm;
+    /// <summary>
+    /// Текущее открытое графическое окно
+    /// </summary>
+    public static frmGraphics GraphicForm { get; set; }
 
-    public static Turtle CurrentTurtle;
+    /// <summary>
+    /// Текущая созданная "черепашка"
+    /// </summary>
+    public static Turtle CurrentTurtle { get; set; }
 
-    private static void InitializeGraphics()
+    /// <summary>
+    /// Показать окно графики и создать "черепашку"
+    /// </summary>
+    public static void CreateTurtle()
     {
         if (GraphicForm == null || GraphicForm.Visible == false)
         {
-            GraphicForm = new TinyLisp.frmGraphics();
-            TinyLisp.frmMain.ActiveForm.Invoke(TinyLisp.frmMain.ShowGraphicsForm);
+            GraphicForm = new frmGraphics();
+            frmMain.ActiveForm.Invoke(frmMain.ShowGraphicsForm);
         }
-    }
 
-    public static void CreateTurtle()
-    {
-        InitializeGraphics();
         CurrentTurtle = new Turtle(GraphicForm.GetGraphics());
     }
 }

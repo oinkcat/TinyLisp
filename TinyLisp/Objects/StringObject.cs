@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Строка
+    /// </summary>
     public class StringObject : BaseObject
     {
-        public string Value;
-
-        public StringObject(string Value)
-        {
-            this.Value = Value;
-        }
+        /// <summary>
+        /// Текст строки
+        /// </summary>
+        public string Value { get; set; }
 
         public override string ToString()
         {
@@ -20,6 +21,11 @@ namespace TinyLisp.Objects
         public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
         {
             return this;
+        }
+
+        public StringObject(string Value)
+        {
+            this.Value = Value;
         }
     }
 }

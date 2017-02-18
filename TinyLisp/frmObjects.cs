@@ -1,53 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using TinyLisp.Objects;
 
 namespace TinyLisp
 {
+    /// <summary>
+    /// Окно отображения объектов в окружении интерпретатора
+    /// </summary>
     public partial class frmObjects : Form
     {
-        private string[] langObjects = { 
-                "NumberObject", "StringObject", "LogicObject", 
-                "SymbolObject", "LambdaObject", "ListObject" 
-        };
-
-        private string[] objectsDesc = { 
-            "Число", "Строка", "Логика", 
-            "Символ", "Лямбда", "Список"
-        };
+        // Описания типов объектов
+        private Dictionary<string, string> typesDesc;
 
         long prevObjectsHashSum;
 
-        public frmObjects()
+        private void InitializeDescriptionsDictionary()
         {
-            InitializeComponent();
+            typesDesc = new Dictionary<string,string> { 
+                { "NumberObject", "Число" },
+                { "StringObject", "Строка" },
+                { "LogicObject", "Логика" },
+                { "SymbolObject", "Символ" },
+                { "LambdaObject", "Лямбда" },
+                { "ListObject", "Список" }
+            };
         }
 
         private string GetObjectDescription(BaseObject anObject)
         {
-            string description = "Другое";
-            string objType = anObject.ToString();
-            System.Diagnostics.Debug.Print(objType);
-            for (int i = 0; i < langObjects.Length; i++)
-            {
-                if (objType == langObjects[i])
-                {
-                    description = objectsDesc[i];
-                    break;
-                }
-            }
-            return description;
+            string typeName = anObject.ToString();
+            if (typesDesc.ContainsKey(typeName))
+                return typesDesc[typeName];
+            else
+                return "Другое";
         }
 
-        private long calculateObjectsHashSum()
+        private long CalculateObjectsHashSum()
         {
             long objectsHashSum = 0;
-            foreach (BaseObject global in LispEnvironment.globals.Values)
+            foreach (BaseObject global in LispEnvironment.Variables.Values)
             {
                 objectsHashSum += global.GetHashCode();
             }
@@ -56,14 +48,17 @@ namespace TinyLisp
 
         private void UpdateObjectsList()
         {
-            long nowSum = calculateObjectsHashSum();
+            long nowSum = CalculateObjectsHashSum();
             if (nowSum != prevObjectsHashSum)
             {
+                // Объекты окружения изменились - отобразить
                 lvObjects.Items.Clear();
-                foreach (string objectKey in LispEnvironment.globals.Keys)
+                foreach (string objectKey in LispEnvironment.Variables.Keys)
                 {
-                    BaseObject item = LispEnvironment.globals[objectKey];
-                    ListViewItem lItem = new ListViewItem(new string[] { objectKey, GetObjectDescription(item) });
+                    BaseObject item = LispEnvironment.Variables[objectKey];
+                    ListViewItem lItem = new ListViewItem(new string[] { 
+                        objectKey, GetObjectDescription(item) 
+                    });
                     lvObjects.Items.Add(lItem);
                 }
                 prevObjectsHashSum = nowSum;
@@ -83,9 +78,15 @@ namespace TinyLisp
 
         private void frmObjects_Load(object sender, EventArgs e)
         {
+            InitializeDescriptionsDictionary();
             UpdateObjectsList();
             prevObjectsHashSum = 0;
             timRenew.Enabled = true;
+        }
+
+        public frmObjects()
+        {
+            InitializeComponent();
         }
     }
 }

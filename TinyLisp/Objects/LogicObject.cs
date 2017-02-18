@@ -3,9 +3,15 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Логическое выражение (истина/ложь)
+    /// </summary>
     public class LogicObject : BaseObject
     {
-        public bool Value;
+        /// <summary>
+        /// Значение выражения
+        /// </summary>
+        public bool Value { get; set; }
 
         #region Логические функции
 
@@ -28,11 +34,6 @@ namespace TinyLisp.Objects
 
         #endregion
 
-        public LogicObject(bool Value)
-        {
-            this.Value = Value;
-        }
-
         public override string ToString()
         {
             return Value ? "#t" : "#f";
@@ -41,6 +42,11 @@ namespace TinyLisp.Objects
         public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
         {
             return this;
+        }
+
+        public LogicObject(bool Value)
+        {
+            this.Value = Value;
         }
     }
 }

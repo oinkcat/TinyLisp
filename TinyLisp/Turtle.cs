@@ -6,7 +6,7 @@ using System.Text;
 /// <summary>
 /// "Черепашка", рисующая графику
 /// </summary>
-internal class Turtle
+public class Turtle
 {
     private Graphics myGraphics;
     private Pen myPen;
@@ -21,21 +21,33 @@ internal class Turtle
 
     private bool isPainting;
 
+    /// <summary>
+    /// Горизонтальная координата
+    /// </summary>
     public double X 
     {
         get { return this.x; }
     }
 
+    /// <summary>
+    /// Вертикальная координата
+    /// </summary>
     public double Y
     {
         get { return this.y; }
     }
 
+    /// <summary>
+    /// Угол поворота
+    /// </summary>
     public double Rotation
     {
         get { return this.rot; }
     }
 
+    /// <summary>
+    /// Выполняетсяли рисование
+    /// </summary>
     public bool Painting
     {
         get { return this.isPainting; }
@@ -47,24 +59,72 @@ internal class Turtle
         }
     }
 
-    private double degToRad(double deg)
-    {
-        return deg / 180 * Math.PI;
-    }
-
+    /// <summary>
+    /// Повернуть "черепашку"
+    /// </summary>
+    /// <param name="byAngle">Угол поворота</param>
     public void Rotate(double byAngle)
     {
         this.rot += degToRad(byAngle);
     }
 
-    public void SetRotation(double Angle)
+    /// <summary>
+    /// Установить угол поворота
+    /// </summary>
+    /// <param name="angle">Угол поворота</param>
+    public void SetRotation(double angle)
     {
-        this.rot = degToRad(Angle) - Math.PI / 2;
+        this.rot = degToRad(angle) - Math.PI / 2;
     }
 
-    public void SetColor(int Color)
+    /// <summary>
+    /// Установить цвет рисования
+    /// </summary>
+    /// <param name="color">Значение цвета</param>
+    public void SetColor(int color)
     {
-        myPen.Color = System.Drawing.Color.FromArgb((int)((uint)Color | 0xFF000000));
+        myPen.Color = Color.FromArgb((int)((uint)color | 0xFF000000));
+    }
+
+    /// <summary>
+    /// Очистить область вывода графики
+    /// </summary>
+    public void Erase()
+    {
+        myGraphics.FillRectangle(Brushes.White, 0, 0, Width, Height);
+    }
+
+    /// <summary>
+    /// Передвинуть "черепашку"
+    /// </summary>
+    /// <param name="x">Горизонтальная координата</param>
+    /// <param name="y">Вертикальная координата</param>
+    public void MoveTo(double x, double y)
+    {
+        this.x = x + Width / 2;
+        this.y = Height - (y + Height / 2);
+        ControlMoving();
+    }
+
+    /// <summary>
+    /// Передвинуть черепашку вперед
+    /// </summary>
+    /// <param name="distance">Расстояние перемещение</param>
+    public void MoveRelative(double distance)
+    {
+        int dst = (int)Math.Abs(distance);
+        int direction = Math.Sign(distance);
+        for (int i = 0; i < dst; i++)
+        {
+            this.x += Math.Cos(this.rot) * direction;
+            this.y += Math.Sin(this.rot) * direction;
+            ControlMoving();
+        }
+    }
+
+    private double degToRad(double deg)
+    {
+        return deg / 180 * Math.PI;
     }
 
     private void StorePreviousPosition()
@@ -77,11 +137,6 @@ internal class Turtle
     {
         myGraphics.DrawLine(myPen, (int)pX, (int)pY, (int)x, (int)y);
         StorePreviousPosition();
-    }
-
-    public void Erase()
-    {
-        myGraphics.FillRectangle(Brushes.White, 0, 0, Width, Height);
     }
 
     private void ControlMoving()
@@ -100,27 +155,6 @@ internal class Turtle
         if (this.isPainting)
         {
             DrawTrack();
-        }
-    }
-
-    public void MoveTo(double X, double Y)
-    {
-        this.x = X + Width / 2;
-        this.y = Height - (Y + Height / 2);
-        ControlMoving();
-    }
-
-    public void MoveRelative(double distance)
-    {
-        int dst = (int)Math.Abs(distance);
-        int direction = Math.Sign(distance);
-        for (int i = 0; i < dst; i++)
-        {
-            this.x += Math.Cos(this.rot) * direction;
-            this.y += Math.Sin(this.rot) * direction;
-            // if(i % 2 == 0)
-            //     System.Threading.Thread.Sleep(1);
-            ControlMoving();
         }
     }
 

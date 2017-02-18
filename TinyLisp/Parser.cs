@@ -24,16 +24,18 @@ public class Parser
     };
 
     // Известные синтаксические конструкции
-    public static string[] syntax = new string[] { 
-        "begin", "define", "set!", "if", "lambda" 
-    };
-
-    private Stack<BaseObject> nestedObjects;
-
-    public Parser()
+    public static string[] syntax
     {
-        this.nestedObjects = new Stack<BaseObject>();
+        get
+        {
+            return new string[] { 
+                "begin", "define", "set!", "if", "lambda" 
+            };
+        }
     }
+
+    // Стек вложенных объектов по мере прочтения исходного кода
+    private Stack<BaseObject> nestedObjects;
 
     // TODO: Вынести
     public static bool TryParseDouble(string value, out double result)
@@ -50,10 +52,12 @@ public class Parser
         return true;
     }
 
-    private BaseObject GetObject(string value, bool quoted)
+    // Выдать объект языка, соответствующий прочитанной лексеме
+    private BaseObject ParseIntoObject(string value, bool quoted)
     {
         double dummy;
         BaseObject newObject = null;
+
         if (Array.IndexOf(functions, value) > -1)
             newObject = new FunctionObject(value);
         else if (Array.IndexOf(syntax, value) > -1)
@@ -68,8 +72,8 @@ public class Parser
             newObject = null;
         else
             newObject = new SymbolObject(value);
-        newObject.Quoted = quoted;
-        quoted = false;
+        newObject.IsQuoted = quoted;
+
         return newObject;
     }
 
@@ -107,7 +111,7 @@ public class Parser
                 currentList = new ListObject();
                 if (isQuoted)
                 {
-                    currentList.Quoted = true;
+                    currentList.IsQuoted = true;
                     isQuoted = false;
                 }
             }
@@ -115,7 +119,8 @@ public class Parser
             {
                 if (newString.Length > 0)
                 {
-                    currentList.AddParameter(GetObject(newString.ToString(), isQuoted));
+                    BaseObject parsed = ParseIntoObject(newString.ToString(), isQuoted);
+                    currentList.AddParameter(parsed);
                 }
                 newString = new StringBuilder();
                 childList = currentList;
@@ -125,7 +130,7 @@ public class Parser
             else if (c == ' ' && !isString && newString.Length > 0)
             {
                 string value = newString.ToString();
-                currentList.AddParameter(GetObject(value, isQuoted));
+                currentList.AddParameter(ParseIntoObject(value, isQuoted));
                 newString = new StringBuilder();
             }
             else if (c == '"')
@@ -145,5 +150,10 @@ public class Parser
         }
 
         return rootObject;
+    }
+
+    public Parser()
+    {
+        this.nestedObjects = new Stack<BaseObject>();
     }
 }

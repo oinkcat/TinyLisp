@@ -4,73 +4,128 @@ using TinyLisp.Objects;
 
 namespace TinyLisp
 {
+    /// <summary>
+    /// Среда выполнения функции (переменные, информация о вызове)
+    /// </summary>
     public class LispEnvironment
     {
-        public static LispEnvironment MainEnvironment = null;
+        /// <summary>
+        /// Текущая среда выполнения
+        /// </summary>
+        public static LispEnvironment Current { get; set; }
 
-        public static Dictionary<string, BaseObject> globals = new Dictionary<string, BaseObject>();
+        /// <summary>
+        /// Глобальные переменные
+        /// </summary>
+        public static Dictionary<string, BaseObject> Variables { get; set; }
 
-        private LispEnvironment prevEnvironment = null;
+        // Среда, в которую вложена текущая
+        private LispEnvironment parent = null;
+
+        /// <summary>
+        /// Локальные переменные
+        /// </summary>
         private Dictionary<string, BaseObject> locals;
-        public LambdaObject Caller;
-        public BaseObject LastResult;
 
-        public static string CurrentDefinition;
+        /// <summary>
+        /// Текущая выполняющаяся функция
+        /// </summary>
+        public LambdaObject Caller { get; set; }
 
-        public LispEnvironment()
+        /// <summary>
+        /// Результат выполнения последнего выражения
+        /// </summary>
+        public BaseObject LastResult { get; set; }
+
+        /// <summary>
+        /// Последняя установленная переменная
+        /// </summary>
+        public static string LastDefinition { get; set; }
+
+        /// <summary>
+        /// Создать новую среду
+        /// </summary>
+        /// <param name="caller">Выполняющаяся функция</param>
+        /// <returns>Новая среда</returns>
+        public LispEnvironment NewEnvironment(LambdaObject caller)
         {
-            globals = new Dictionary<string, BaseObject>();
-            locals = new Dictionary<string, BaseObject>();
-            PutGlobalObject("pi", new NumberObject(Math.PI));
-            PutGlobalObject("e", new NumberObject(Math.E));
-        }
-
-        public LispEnvironment(LispEnvironment Previous, LambdaObject Caller)
-        {
-            locals = new Dictionary<string, BaseObject>();
-            this.Caller = Caller;
-            prevEnvironment = Previous;
-        }
-
-        public LispEnvironment NewEnvironment(LambdaObject Caller)
-        {
-            LispEnvironment newEnv = new LispEnvironment(this, Caller);
+            LispEnvironment newEnv = new LispEnvironment(this, caller);
             return newEnv;
         }
 
-        public BaseObject GetLocalRecursive(string Symbol)
+        /// <summary>
+        /// Выдать локальную переменную
+        /// </summary>
+        /// <param name="symbol">Имя объекта</param>
+        /// <returns>Запрошенный объект</returns>
+        public BaseObject GetLocalRecursive(string symbol)
         {
-            if (locals.ContainsKey(Symbol))
+            if (locals.ContainsKey(symbol))
             {
-                return locals[Symbol];
+                return locals[symbol];
             }
             else
             {
-                if (prevEnvironment != null)
-                    return prevEnvironment.GetLocalRecursive(Symbol);
+                if (parent != null)
+                    return parent.GetLocalRecursive(symbol);
                 else
-                    throw new Exception(String.Format("Символ '{0}' не определен", Symbol));
+                    throw new Exception(String.Format("Символ '{0}' не определен", symbol));
             }
         }
 
-        public static BaseObject GetGlobalObject(string Symbol)
+        /// <summary>
+        /// Выдать глобальную переменную
+        /// </summary>
+        /// <param name="symbol">Имя переменной</param>
+        /// <returns>Объект-значение переменной</returns>
+        public static BaseObject GetGlobalObject(string symbol)
         {
-            return globals.ContainsKey(Symbol) ? globals[Symbol] : null;
+            return Variables.ContainsKey(symbol) ? Variables[symbol] : null;
         }
 
-        public BaseObject GetObject(string Symbol)
+        /// <summary>
+        /// Выдать глобальную/локальную переменную
+        /// </summary>
+        /// <param name="symbol">Имя переменной</param>
+        /// <returns>Объект-значение переменной</returns>
+        public BaseObject GetObject(string symbol)
         {
-            return globals.ContainsKey(Symbol) ? globals[Symbol] : GetLocalRecursive(Symbol);
+            return Variables.ContainsKey(symbol) ? Variables[symbol] : GetLocalRecursive(symbol);
         }
 
-        public void PutLocalObject(string Symbol, BaseObject LispObject)
+        /// <summary>
+        /// Поместить объект в локальную переменную
+        /// </summary>
+        /// <param name="symbol">Имя переменной</param>
+        /// <param name="lispObject">Помещаемый объект</param>
+        public void PutLocalObject(string symbol, BaseObject lispObject)
         {
-            locals[Symbol] = LispObject;
+            locals[symbol] = lispObject;
         }
 
-        public void PutGlobalObject(string Symbol, BaseObject LispObject)
+        /// <summary>
+        /// Поместить объект в глобальную переменную
+        /// </summary>
+        /// <param name="symbol">Имя переменной</param>
+        /// <param name="lispObject">Помещаемый объект</param>
+        public void PutGlobalObject(string symbol, BaseObject lispObject)
         {
-            globals[Symbol] = LispObject;
+            Variables[symbol] = lispObject;
+        }
+
+        public LispEnvironment(LispEnvironment parent, LambdaObject caller)
+        {
+            locals = new Dictionary<string, BaseObject>();
+            this.Caller = caller;
+            this.parent = parent;
+        }
+
+        public LispEnvironment()
+        {
+            Variables = new Dictionary<string, BaseObject>();
+            locals = new Dictionary<string, BaseObject>();
+            PutGlobalObject("pi", new NumberObject(Math.PI));
+            PutGlobalObject("e", new NumberObject(Math.E));
         }
     }
 }

@@ -3,18 +3,11 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Встроенная функция
+    /// </summary>
     public class FunctionObject : BaseObject, IApplyable
     {
-        public FunctionObject(string Name)
-        {
-            this.Name = Name;
-        }
-
-        public override string ToString()
-        {
-            return String.Format("<Function: {0}>", Name);
-        }
-
         public BaseObject Apply(LispEnvironment Environment, List<BaseObject> Params)
         {
             switch (this.Name)
@@ -55,7 +48,7 @@ namespace TinyLisp.Objects
                     break;
                 case "list":
                     ListObject newList = new ListObject(Environment, Params);
-                    newList.Quoted = true;
+                    newList.IsQuoted = true;
                     return newList;
                 case "map":
                     return BaseFunctions.MapFunction(Environment, Params);
@@ -92,11 +85,6 @@ namespace TinyLisp.Objects
             }
 
             return null;
-        }
-
-        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
-        {
-            return this;
         }
 
         private BaseObject ApplyTurtleFunction(LispEnvironment Environment, List<BaseObject> Params)
@@ -145,6 +133,21 @@ namespace TinyLisp.Objects
             }
 
             return null;
+        }
+
+        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
+        {
+            return this;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("<Function: {0}>", Name);
+        }
+
+        public FunctionObject(string Name)
+        {
+            this.Name = Name;
         }
     }
 }

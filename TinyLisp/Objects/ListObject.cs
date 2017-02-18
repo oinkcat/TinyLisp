@@ -4,52 +4,27 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Список
+    /// </summary>
     public class ListObject : BaseObject
     {
-        public List<BaseObject> List;
-
-        public ListObject()
-        {
-            this.List = new List<BaseObject>();
-        }
-
-        public ListObject(List<BaseObject> List)
-        {
-            this.List = List;
-        }
-
-        public ListObject(LispEnvironment Environment, List<BaseObject> List)
-        {
-            this.List = new List<BaseObject>();
-            foreach (BaseObject obj in List)
-                this.List.Add(obj.Eval(Environment, null));
-        }
+        /// <summary>
+        /// Элементы списка
+        /// </summary>
+        public List<BaseObject> Items { get; set; }
 
         public void AddParameter(BaseObject obj)
         {
-            List.Add(obj);
-        }
-
-        public override string ToString()
-        {
-            StringBuilder contents = new StringBuilder();
-            foreach (BaseObject obj in List)
-            {
-                if (obj != null)
-                {
-                    contents.Append(obj.ToString());
-                    contents.Append(' ');
-                }
-            }
-            return String.Format("({0})", contents.ToString().Trim());
+            Items.Add(obj);
         }
 
         public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
         {
-            if (this.Quoted)
+            if (this.IsQuoted)
                 return this;
-            BaseObject func = List[0];
-            if (func.Quoted)
+            BaseObject func = Items[0];
+            if (func.IsQuoted)
                 return func;
             if (func is SymbolObject)
             {
@@ -62,9 +37,9 @@ namespace TinyLisp.Objects
             if (func is IApplyable)
             {
                 BaseObject applyResult = null;
-                List<BaseObject> ParamsList = List.GetRange(1, List.Count - 1);
+                List<BaseObject> ParamsList = Items.GetRange(1, Items.Count - 1);
 
-                bool tailRecursionBegins = func is LambdaObject && (func as LambdaObject).TailRecursive;
+                bool tailRecursionBegins = func is LambdaObject && (func as LambdaObject).IsTailRecursive;
                 if (tailRecursionBegins)
                 {
                     bool tailRecursionContinues = Environment.Caller == func;
@@ -99,6 +74,37 @@ namespace TinyLisp.Objects
             }
             else
                 throw new ApplicationException(String.Format("Первый элемент списка - неприменимый объект: {0}", func.ToString())); ;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder contents = new StringBuilder();
+            foreach (BaseObject obj in Items)
+            {
+                if (obj != null)
+                {
+                    contents.Append(obj.ToString());
+                    contents.Append(' ');
+                }
+            }
+            return String.Format("({0})", contents.ToString().Trim());
+        }
+
+        public ListObject(LispEnvironment Environment, List<BaseObject> List)
+        {
+            this.Items = new List<BaseObject>();
+            foreach (BaseObject obj in List)
+                this.Items.Add(obj.Eval(Environment, null));
+        }
+
+        public ListObject(List<BaseObject> List)
+        {
+            this.Items = List;
+        }
+
+        public ListObject()
+        {
+            this.Items = new List<BaseObject>();
         }
     }
 }

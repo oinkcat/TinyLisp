@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGraphics));
             this.tiUpdater = new System.Windows.Forms.Timer(this.components);
             this.cmPictureOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sfdSavePicture = new System.Windows.Forms.SaveFileDialog();
             this.cmPictureOptions.SuspendLayout();
             this.SuspendLayout();
@@ -45,17 +45,17 @@
             // cmPictureOptions
             // 
             this.cmPictureOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.сохранитьToolStripMenuItem});
+            this.saveItem});
             this.cmPictureOptions.Name = "cmPictureOptions";
-            this.cmPictureOptions.Size = new System.Drawing.Size(163, 26);
+            this.cmPictureOptions.Size = new System.Drawing.Size(163, 48);
             // 
-            // сохранитьToolStripMenuItem
+            // saveItem
             // 
-            this.сохранитьToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.saveHS;
-            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.сохранитьToolStripMenuItem.Text = "Со&хранить как...";
-            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            this.saveItem.Image = global::TinyLisp.Properties.Resources.saveHS;
+            this.saveItem.Name = "saveItem";
+            this.saveItem.Size = new System.Drawing.Size(162, 22);
+            this.saveItem.Text = "Со&хранить как...";
+            this.saveItem.Click += new System.EventHandler(this.saveItem_Click);
             // 
             // sfdSavePicture
             // 
@@ -90,7 +90,7 @@
 
         private System.Windows.Forms.Timer tiUpdater;
         private System.Windows.Forms.ContextMenuStrip cmPictureOptions;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveItem;
         private System.Windows.Forms.SaveFileDialog sfdSavePicture;
     }
 }

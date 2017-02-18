@@ -3,9 +3,15 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Число
+    /// </summary>
     public class NumberObject : BaseObject
     {
-        public double Value;
+        /// <summary>
+        /// Значение числа
+        /// </summary>
+        public double Value { get; set; }
 
         #region Числовые функции
 
@@ -38,6 +44,16 @@ namespace TinyLisp.Objects
 
         #endregion
 
+        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
+        {
+            return this;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         public NumberObject(NumberObject obj)
         {
             Value = obj.Value;
@@ -46,16 +62,6 @@ namespace TinyLisp.Objects
         public NumberObject(double Number)
         {
             Value = Number;
-        }
-
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
-
-        public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
-        {
-            return this;
         }
     }
 }

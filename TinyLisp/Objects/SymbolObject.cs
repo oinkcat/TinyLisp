@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Переменная или функця
+    /// </summary>
     public class SymbolObject : BaseObject
     {
         public SymbolObject(string Name)
@@ -17,7 +20,7 @@ namespace TinyLisp.Objects
 
         public override BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params)
         {
-            return !this.Quoted ? Environment.GetObject(this.Name) : this;
+            return !this.IsQuoted ? Environment.GetObject(this.Name) : this;
         }
     }
 }

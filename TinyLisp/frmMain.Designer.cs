@@ -30,26 +30,26 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.msMain = new System.Windows.Forms.MenuStrip();
-            this.фвйлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.новыйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.newScriptItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openScriptItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveScriptItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.программаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выполнитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.очиститьВыводToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearOutputItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.miSlowPainting = new System.Windows.Forms.ToolStripMenuItem();
-            this.окружениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.показатьОбъектыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.slowPaintItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.envMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.showEnvItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.новоеОкружениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newEnvItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
-            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rtbSource = new System.Windows.Forms.RichTextBox();
             this.ofdOpenProgram = new System.Windows.Forms.OpenFileDialog();
             this.sfdSaveProgram = new System.Windows.Forms.SaveFileDialog();
@@ -75,96 +75,96 @@
             // msMain
             // 
             this.msMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.фвйлToolStripMenuItem,
-            this.программаToolStripMenuItem,
-            this.окружениеToolStripMenuItem,
-            this.toolStripMenuItem4});
+            this.fileMenu,
+            this.scriptMenu,
+            this.envMenu,
+            this.helpMenu});
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
             this.msMain.Size = new System.Drawing.Size(699, 24);
             this.msMain.TabIndex = 0;
             this.msMain.Text = "&Файл";
             // 
-            // фвйлToolStripMenuItem
+            // fileMenu
             // 
-            this.фвйлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.новыйToolStripMenuItem,
-            this.открытьToolStripMenuItem,
-            this.сохранитьToolStripMenuItem,
+            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newScriptItem,
+            this.openScriptItem,
+            this.saveScriptItem,
             this.toolStripMenuItem1,
-            this.выходToolStripMenuItem});
-            this.фвйлToolStripMenuItem.Name = "фвйлToolStripMenuItem";
-            this.фвйлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.фвйлToolStripMenuItem.Text = "&Файл";
+            this.exitItem});
+            this.fileMenu.Name = "fileMenu";
+            this.fileMenu.Size = new System.Drawing.Size(48, 20);
+            this.fileMenu.Text = "&Файл";
             // 
-            // новыйToolStripMenuItem
+            // newScriptItem
             // 
-            this.новыйToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.NewDocumentHS;
-            this.новыйToolStripMenuItem.Name = "новыйToolStripMenuItem";
-            this.новыйToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.новыйToolStripMenuItem.Text = "&Новый";
-            this.новыйToolStripMenuItem.Click += new System.EventHandler(this.новыйToolStripMenuItem_Click);
+            this.newScriptItem.Image = global::TinyLisp.Properties.Resources.NewDocumentHS;
+            this.newScriptItem.Name = "newScriptItem";
+            this.newScriptItem.Size = new System.Drawing.Size(152, 22);
+            this.newScriptItem.Text = "&Новый";
+            this.newScriptItem.Click += new System.EventHandler(this.newScriptItem_Click);
             // 
-            // открытьToolStripMenuItem
+            // openScriptItem
             // 
-            this.открытьToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.openHS;
-            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.открытьToolStripMenuItem.Text = "О&ткрыть...";
-            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
+            this.openScriptItem.Image = global::TinyLisp.Properties.Resources.openHS;
+            this.openScriptItem.Name = "openScriptItem";
+            this.openScriptItem.Size = new System.Drawing.Size(152, 22);
+            this.openScriptItem.Text = "О&ткрыть...";
+            this.openScriptItem.Click += new System.EventHandler(this.openScriptItem_Click);
             // 
-            // сохранитьToolStripMenuItem
+            // saveScriptItem
             // 
-            this.сохранитьToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.saveHS;
-            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.сохранитьToolStripMenuItem.Text = "Со&хранить...";
-            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            this.saveScriptItem.Image = global::TinyLisp.Properties.Resources.saveHS;
+            this.saveScriptItem.Name = "saveScriptItem";
+            this.saveScriptItem.Size = new System.Drawing.Size(152, 22);
+            this.saveScriptItem.Text = "Со&хранить...";
+            this.saveScriptItem.Click += new System.EventHandler(this.saveScriptItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(138, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
-            // выходToolStripMenuItem
+            // exitItem
             // 
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.выходToolStripMenuItem.Text = "В&ыход";
-            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
+            this.exitItem.Name = "exitItem";
+            this.exitItem.Size = new System.Drawing.Size(152, 22);
+            this.exitItem.Text = "В&ыход";
+            this.exitItem.Click += new System.EventHandler(this.exitItem_Click);
             // 
-            // программаToolStripMenuItem
+            // scriptMenu
             // 
-            this.программаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.выполнитьToolStripMenuItem,
+            this.scriptMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.executeItem,
             this.toolStripMenuItem3,
-            this.очиститьВыводToolStripMenuItem,
+            this.clearOutputItem,
             this.toolStripMenuItem2,
-            this.miSlowPainting});
-            this.программаToolStripMenuItem.Name = "программаToolStripMenuItem";
-            this.программаToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
-            this.программаToolStripMenuItem.Text = "Прог&рамма";
+            this.slowPaintItem});
+            this.scriptMenu.Name = "scriptMenu";
+            this.scriptMenu.Size = new System.Drawing.Size(84, 20);
+            this.scriptMenu.Text = "Прог&рамма";
             // 
-            // выполнитьToolStripMenuItem
+            // executeItem
             // 
-            this.выполнитьToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.PlayHS;
-            this.выполнитьToolStripMenuItem.Name = "выполнитьToolStripMenuItem";
-            this.выполнитьToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.выполнитьToolStripMenuItem.Text = "Вы&полнить";
-            this.выполнитьToolStripMenuItem.Click += new System.EventHandler(this.выполнитьToolStripMenuItem_Click);
+            this.executeItem.Image = global::TinyLisp.Properties.Resources.PlayHS;
+            this.executeItem.Name = "executeItem";
+            this.executeItem.Size = new System.Drawing.Size(273, 22);
+            this.executeItem.Text = "Вы&полнить";
+            this.executeItem.Click += new System.EventHandler(this.executeItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(270, 6);
             // 
-            // очиститьВыводToolStripMenuItem
+            // clearOutputItem
             // 
-            this.очиститьВыводToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.Erase;
-            this.очиститьВыводToolStripMenuItem.Name = "очиститьВыводToolStripMenuItem";
-            this.очиститьВыводToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.очиститьВыводToolStripMenuItem.Text = "О&чистить вывод";
-            this.очиститьВыводToolStripMenuItem.Click += new System.EventHandler(this.очиститьВыводToolStripMenuItem_Click);
+            this.clearOutputItem.Image = global::TinyLisp.Properties.Resources.Erase;
+            this.clearOutputItem.Name = "clearOutputItem";
+            this.clearOutputItem.Size = new System.Drawing.Size(273, 22);
+            this.clearOutputItem.Text = "О&чистить вывод";
+            this.clearOutputItem.Click += new System.EventHandler(this.clearOutputItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -172,74 +172,74 @@
             this.toolStripMenuItem2.Size = new System.Drawing.Size(270, 6);
             this.toolStripMenuItem2.Visible = false;
             // 
-            // miSlowPainting
+            // slowPaintItem
             // 
-            this.miSlowPainting.Checked = true;
-            this.miSlowPainting.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.miSlowPainting.Name = "miSlowPainting";
-            this.miSlowPainting.Size = new System.Drawing.Size(273, 22);
-            this.miSlowPainting.Text = "Медленное &рисование (Черепашка)";
-            this.miSlowPainting.Visible = false;
+            this.slowPaintItem.Checked = true;
+            this.slowPaintItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.slowPaintItem.Name = "slowPaintItem";
+            this.slowPaintItem.Size = new System.Drawing.Size(273, 22);
+            this.slowPaintItem.Text = "Медленное &рисование (Черепашка)";
+            this.slowPaintItem.Visible = false;
             // 
-            // окружениеToolStripMenuItem
+            // envMenu
             // 
-            this.окружениеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.показатьОбъектыToolStripMenuItem,
+            this.envMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showEnvItem,
             this.toolStripMenuItem5,
-            this.новоеОкружениеToolStripMenuItem});
-            this.окружениеToolStripMenuItem.Name = "окружениеToolStripMenuItem";
-            this.окружениеToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-            this.окружениеToolStripMenuItem.Text = "Окруже&ние";
+            this.newEnvItem});
+            this.envMenu.Name = "envMenu";
+            this.envMenu.Size = new System.Drawing.Size(82, 20);
+            this.envMenu.Text = "Окруже&ние";
             // 
-            // показатьОбъектыToolStripMenuItem
+            // showEnvItem
             // 
-            this.показатьОбъектыToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.AppWindow;
-            this.показатьОбъектыToolStripMenuItem.Name = "показатьОбъектыToolStripMenuItem";
-            this.показатьОбъектыToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.показатьОбъектыToolStripMenuItem.Text = "Пока&зать объекты...";
-            this.показатьОбъектыToolStripMenuItem.Click += new System.EventHandler(this.показатьОбъектыToolStripMenuItem_Click);
+            this.showEnvItem.Image = global::TinyLisp.Properties.Resources.AppWindow;
+            this.showEnvItem.Name = "showEnvItem";
+            this.showEnvItem.Size = new System.Drawing.Size(183, 22);
+            this.showEnvItem.Text = "Пока&зать объекты...";
+            this.showEnvItem.Click += new System.EventHandler(this.showObjectsItem_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 6);
             // 
-            // новоеОкружениеToolStripMenuItem
+            // newEnvItem
             // 
-            this.новоеОкружениеToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.NewWindow;
-            this.новоеОкружениеToolStripMenuItem.Name = "новоеОкружениеToolStripMenuItem";
-            this.новоеОкружениеToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.новоеОкружениеToolStripMenuItem.Text = "Новое окру&жение";
-            this.новоеОкружениеToolStripMenuItem.Click += new System.EventHandler(this.новоеОкружениеToolStripMenuItem_Click);
+            this.newEnvItem.Image = global::TinyLisp.Properties.Resources.NewWindow;
+            this.newEnvItem.Name = "newEnvItem";
+            this.newEnvItem.Size = new System.Drawing.Size(183, 22);
+            this.newEnvItem.Text = "Новое окру&жение";
+            this.newEnvItem.Click += new System.EventHandler(this.newEnvItem_Click);
             // 
-            // toolStripMenuItem4
+            // helpMenu
             // 
-            this.toolStripMenuItem4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.справкаToolStripMenuItem,
+            this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpItem,
             this.toolStripMenuItem6,
-            this.оПрограммеToolStripMenuItem});
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(24, 20);
-            this.toolStripMenuItem4.Text = "&?";
+            this.aboutItem});
+            this.helpMenu.Name = "helpMenu";
+            this.helpMenu.Size = new System.Drawing.Size(24, 20);
+            this.helpMenu.Text = "&?";
             // 
-            // справкаToolStripMenuItem
+            // helpItem
             // 
-            this.справкаToolStripMenuItem.Image = global::TinyLisp.Properties.Resources.Help;
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.справкаToolStripMenuItem.Text = "Спра&вка";
+            this.helpItem.Image = global::TinyLisp.Properties.Resources.Help;
+            this.helpItem.Name = "helpItem";
+            this.helpItem.Size = new System.Drawing.Size(158, 22);
+            this.helpItem.Text = "Спра&вка";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.Size = new System.Drawing.Size(155, 6);
             // 
-            // оПрограммеToolStripMenuItem
+            // aboutItem
             // 
-            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.оПрограммеToolStripMenuItem.Text = "&О программе...";
-            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
+            this.aboutItem.Name = "aboutItem";
+            this.aboutItem.Size = new System.Drawing.Size(158, 22);
+            this.aboutItem.Text = "&О программе...";
+            this.aboutItem.Click += new System.EventHandler(this.aboutItem_Click);
             // 
             // rtbSource
             // 
@@ -355,7 +355,7 @@
             this.tsbClearOutput.Name = "tsbClearOutput";
             this.tsbClearOutput.Size = new System.Drawing.Size(40, 40);
             this.tsbClearOutput.Text = "Очистить вывод";
-            this.tsbClearOutput.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.tsbClearOutput.Click += new System.EventHandler(this.clearOutput_Click);
             // 
             // toolStripSeparator2
             // 
@@ -448,20 +448,20 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip msMain;
-        private System.Windows.Forms.ToolStripMenuItem фвйлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem программаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выполнитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileMenu;
+        private System.Windows.Forms.ToolStripMenuItem openScriptItem;
+        private System.Windows.Forms.ToolStripMenuItem exitItem;
+        private System.Windows.Forms.ToolStripMenuItem scriptMenu;
+        private System.Windows.Forms.ToolStripMenuItem executeItem;
         private System.Windows.Forms.RichTextBox rtbSource;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.OpenFileDialog ofdOpenProgram;
-        private System.Windows.Forms.ToolStripMenuItem очиститьВыводToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearOutputItem;
+        private System.Windows.Forms.ToolStripMenuItem saveScriptItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem miSlowPainting;
+        private System.Windows.Forms.ToolStripMenuItem slowPaintItem;
         private System.Windows.Forms.SaveFileDialog sfdSaveProgram;
-        private System.Windows.Forms.ToolStripMenuItem новыйToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newScriptItem;
         private System.Windows.Forms.ToolStrip tsTools;
         private System.Windows.Forms.ToolStripButton tsbNew;
         private System.Windows.Forms.ToolStripButton tsbOpen;
@@ -475,13 +475,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tsbEnvObjects;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem окружениеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem новоеОкружениеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem показатьОбъектыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem envMenu;
+        private System.Windows.Forms.ToolStripMenuItem newEnvItem;
+        private System.Windows.Forms.ToolStripMenuItem showEnvItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpMenu;
+        private System.Windows.Forms.ToolStripMenuItem helpItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton tsbClearOutput;

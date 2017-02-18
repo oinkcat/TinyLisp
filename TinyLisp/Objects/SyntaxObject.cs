@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Синтаксическая конструкция языка
+    /// </summary>
     public class SyntaxObject : BaseObject, IApplyable
     {
-        public SyntaxObject(string Name)
-        {
-            this.Name = Name;
-        }
-
         public BaseObject Apply(LispEnvironment Environment, List<BaseObject> Params)
         {
             switch (Name)
@@ -26,22 +24,22 @@ namespace TinyLisp.Objects
                     if (symbol is SymbolObject)
                     {
                         symbolName = symbol.Name;
-                        LispEnvironment.CurrentDefinition = symbolName;
+                        LispEnvironment.LastDefinition = symbolName;
                         definition = Params[1].Eval(Environment, null);
                     }
                     else if (symbol is ListObject) // Упрощенное определение функции
                     {
-                        List<BaseObject> headList = ((ListObject)symbol).List;
+                        List<BaseObject> headList = ((ListObject)symbol).Items;
                         symbolName = headList[0].Name;
-                        LispEnvironment.CurrentDefinition = symbolName;
+                        LispEnvironment.LastDefinition = symbolName;
                         ListObject funcParameters = new ListObject();
                         if (headList.Count > 1)
-                            funcParameters.List = headList.GetRange(1, headList.Count - 1);
+                            funcParameters.Items = headList.GetRange(1, headList.Count - 1);
                         List<BaseObject> bodyList = Params.GetRange(1, Params.Count - 1);
                         ListObject funcBody = bodyList.Count > 1 ? new ListObject(bodyList) : (ListObject)bodyList[0];
                         if (bodyList.Count > 1)
                         {
-                            funcBody.List.Insert(0, new SyntaxObject("begin"));
+                            funcBody.Items.Insert(0, new SyntaxObject("begin"));
                         }
                         definition = new LambdaObject(funcParameters, funcBody, Environment);
                     }
@@ -77,6 +75,11 @@ namespace TinyLisp.Objects
         public override string ToString()
         {
             return "Syntax";
+        }
+
+        public SyntaxObject(string Name)
+        {
+            this.Name = Name;
         }
     }
 }

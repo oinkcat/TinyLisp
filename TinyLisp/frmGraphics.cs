@@ -1,26 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TinyLisp
 {
+    /// <summary>
+    /// Форма для вывода графики
+    /// </summary>
     public partial class frmGraphics : Form
     {
-        Bitmap Canvas = null;
+        private Bitmap canvas;
 
-        public frmGraphics()
-        {
-            InitializeComponent();
-        }
-
+        /// <summary>
+        /// Выдать контекст вывода графики
+        /// </summary>
+        /// <returns>Текущий графический контекст</returns>
         public Graphics GetGraphics()
         {
-            Canvas = new Bitmap(this.ClientRectangle.Width, this.ClientRectangle.Height);
-            Graphics formGraphics = Graphics.FromImage(Canvas);
+            if(canvas == null)
+            {
+                Rectangle bounds = ClientRectangle;
+                canvas = new Bitmap(bounds.Width, bounds.Height);
+            }
+
+            Graphics formGraphics = Graphics.FromImage(canvas);
             return formGraphics;
         }
 
@@ -33,14 +36,14 @@ namespace TinyLisp
         {
             const int LENGTH = 5;
             Turtle current = TurtlesManager.CurrentTurtle;
-            if (current != null && Canvas != null)
+            if (current != null && canvas != null)
             {
                 int tX = (int)current.X;
                 int tY = (int)current.Y;
                 double tRot = current.Rotation;
                 int leX = tX + (int)(Math.Cos(tRot) * LENGTH * 2);
                 int leY = tY + (int)(Math.Sin(tRot) * LENGTH * 2);
-                e.Graphics.DrawImage(Canvas, 0, 0);
+                e.Graphics.DrawImage(canvas, 0, 0);
                 e.Graphics.DrawEllipse(Pens.Black, tX - LENGTH, tY - LENGTH, LENGTH * 2, LENGTH * 2);
                 e.Graphics.DrawLine(Pens.Black, tX, tY, leX, leY);
             }
@@ -62,12 +65,17 @@ namespace TinyLisp
             }
         }
 
-        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveItem_Click(object sender, EventArgs e)
         {
-            if (sfdSavePicture.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (sfdSavePicture.ShowDialog() == DialogResult.OK)
             {
-                Canvas.Save(sfdSavePicture.FileName);
+                canvas.Save(sfdSavePicture.FileName);
             }
+        }
+
+        public frmGraphics()
+        {
+            InitializeComponent();
         }
     }
 }

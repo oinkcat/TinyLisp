@@ -4,15 +4,22 @@ using System.Collections.Generic;
 
 namespace TinyLisp.Objects
 {
+    /// <summary>
+    /// Объект, который может быть применен к параметрам
+    /// </summary>
     public interface IApplyable
     {
         BaseObject Apply(LispEnvironment Environment, List<BaseObject> Params);
     }
 
+    /// <summary>
+    /// Базовый класс объекта языка
+    /// </summary>
     public abstract class BaseObject
     {
-        public string Name;
-        public bool Quoted = false;
+        public string Name { get; set; }
+
+        public bool IsQuoted { get; set; }
 
         public abstract BaseObject Eval(LispEnvironment Environment, List<BaseObject> Params);
     }
@@ -55,7 +62,7 @@ namespace TinyLisp.Objects
         {
             RestrictParametersNumber(List, "car", 1);
             ListObject list = GetList(Environment, List[0], "car");
-            return list.List[0] as BaseObject;
+            return list.Items[0] as BaseObject;
         }
 
         public static ListObject RestOfList(LispEnvironment Environment, List<BaseObject> List)
@@ -63,8 +70,8 @@ namespace TinyLisp.Objects
             RestrictParametersNumber(List, "cdr", 1);
             ListObject list = GetList(Environment, List[0], "cdr");
             List<BaseObject> newList = new List<BaseObject>();
-            for (int i = 1; i < list.List.Count; i++)
-                newList.Add(list.List[i]);
+            for (int i = 1; i < list.Items.Count; i++)
+                newList.Add(list.Items[i]);
             return new ListObject(Environment, newList);
         }
 
@@ -73,8 +80,8 @@ namespace TinyLisp.Objects
             RestrictParametersNumber(List, "cons", 2);
             BaseObject newElement = List[0].Eval(Environment, null);
             ListObject list = GetList(Environment, List[1], "cons");
-            ListObject newList = new ListObject(list.List);
-            newList.List.Insert(0, newElement);
+            ListObject newList = new ListObject(list.Items);
+            newList.Items.Insert(0, newElement);
             return newList;
         }
 
@@ -88,10 +95,10 @@ namespace TinyLisp.Objects
             IApplyable applyableFunc = (IApplyable)func;
             BaseObject list = Params[1].Eval(Environment, null);
             ListObject evaluatedList = GetList(Environment, list, "map");
-            for (int i = 0; i < evaluatedList.List.Count; i++)
+            for (int i = 0; i < evaluatedList.Items.Count; i++)
             {
                 List<BaseObject> funcParameter = new List<BaseObject>(1);
-                funcParameter.Add(evaluatedList.List[i]);
+                funcParameter.Add(evaluatedList.Items[i]);
                 BaseObject result = applyableFunc.Apply(Environment, funcParameter);
                 output.AddParameter(result);
             }
@@ -102,7 +109,7 @@ namespace TinyLisp.Objects
         {
             RestrictParametersNumber(Params, "length", 1);
             ListObject targetList = GetList(Environment, Params[0], "length");
-            int listCount = targetList.List.Count;
+            int listCount = targetList.Items.Count;
             return new NumberObject(listCount);
         }
 
@@ -111,7 +118,7 @@ namespace TinyLisp.Objects
             RestrictParametersNumber(Params, "list-ref", 2);
             ListObject targetList = GetList(Environment, Params[0], "list-ref");
             int index = GetInteger(Environment, Params, 1);
-            return targetList.List[index].Eval(Environment, null);
+            return targetList.Items[index].Eval(Environment, null);
         }
 
         public static BaseObject ListSetItem(LispEnvironment Environment, List<BaseObject> Params)
@@ -120,7 +127,7 @@ namespace TinyLisp.Objects
             BaseObject newItem = Params[1].Eval(Environment, null);
             ListObject targetList = GetList(Environment, Params[0], "lest-set");
             int index = GetInteger(Environment, Params, 2);
-            targetList.List[index] = newItem;
+            targetList.Items[index] = newItem;
             return newItem;
         }
 
@@ -212,7 +219,7 @@ namespace TinyLisp.Objects
 
         public static LogicObject IsEmptyList(LispEnvironment Environment, ListObject Element)
         {
-            return new LogicObject(Element.List.Count == 0);
+            return new LogicObject(Element.Items.Count == 0);
         }
 
         public static LogicObject IsList(LispEnvironment Environment, BaseObject Element)
