@@ -11,17 +11,14 @@ namespace TinyLisp
     /// <summary>
     /// Главное окно программы
     /// </summary>
-    public partial class frmMain : Form
+    public partial class frmMain : Form, IUICallbacks
     {
-        private Thread executingThread;
-        private BaseFunctions.OutputFunction addTextToTextBox;
+        private Thread executionThread;
 
-        public delegate void VoidFunc();
-        public static VoidFunc ShowGraphicsForm;
-        private VoidFunc ExecutionEnded;
-
-        public static VoidFunc BeginUserInput;
-        public static string EnteredString;
+        /// <summary>
+        /// Последняя введенная пользователем строка
+        /// </summary>
+        public static string LastEnteredString { get; private set; }
 
         private frmObjects ObjectsForm = null;
 
@@ -31,59 +28,62 @@ namespace TinyLisp
         
         const string APP_NAME = "TinyLisp";
 
+        /// <summary>
+        /// Функции взаимодействия с интерфейсом
+        /// </summary>
+        public static IUICallbacks UI { get; private set; }
+
         #region Функции обратного вызова
         public void ShowGraphics()
         {
-            TurtlesManager.GraphicForm.Show(this);
+            this.Invoke(new Action(() => TurtlesManager.GraphicForm.Show(this) ));
         }
 
-        private void AddText(string Text)
+        public void AppendOutputText(string text)
         {
-            tbResult.Text += Text;
-            tbResult.SelectionStart = tbResult.Text.Length;
-            tbResult.ScrollToCaret();
+            this.Invoke(new Action(() => {
+                tbResult.Text += text;
+                tbResult.SelectionStart = tbResult.Text.Length;
+                tbResult.ScrollToCaret();
+            }));
         }
 
-        private void BeginInput()
+        public void BeginInput()
         {
-            tbResult.BackColor = Color.PaleGoldenrod;
-            tbResult.ReadOnly = false;
-            EnteredString = "";
-            AddText("\r\n");
-            tbResult.Focus();
+            this.Invoke(new Action(() => {
+                tbResult.BackColor = Color.PaleGoldenrod;
+                tbResult.ReadOnly = false;
+                LastEnteredString = String.Empty;
+                AppendOutputText(Environment.NewLine);
+                tbResult.Focus();
+            }));
         }
+        #endregion
 
         private void EndInput()
         {
             tbResult.BackColor = Color.White;
             tbResult.ReadOnly = true;
             if(tbResult.Lines.Length > 0)
-                EnteredString = tbResult.Lines[tbResult.Lines.Length - 1].Trim();
-            AddText("\r\n");
+                LastEnteredString = tbResult.Lines[tbResult.Lines.Length - 1].Trim();
+            AppendOutputText(Environment.NewLine);
             BaseFunctions.InputCompleted.Set();
         }
 
-        private void WriteToOutput(string Text)
-        {
-            this.Invoke(addTextToTextBox, Text);
-        }
-        #endregion
-
-        public frmMain()
-        {
-            InitializeComponent();
-        }
-
-        private void StartExecution(object Code)
+        private void StartExecution(object code)
         {
             try
             {
                 Parser codeParser = new Parser();
-                ListObject parsedList = codeParser.Parse((string)Code);
+                ListObject parsedList = codeParser.Parse((string)code);
                 LispEnvironment env = LispEnvironment.Current;
                 parsedList.Eval(env, null);
+
                 if (env.LastResult != null)
-                    WriteToOutput(env.LastResult.ToString());
+                {
+                    string execResult = env.LastResult.ToString();
+                    AppendOutputText(execResult);
+                }
             }
             catch (ThreadAbortException)
             {
@@ -98,7 +98,7 @@ namespace TinyLisp
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             GC.Collect();
-            this.Invoke(ExecutionEnded);
+            this.Invoke(new Action(() => ExecutionCompleted()));
         }
 
         private void ExecutionCompleted()
@@ -112,16 +112,16 @@ namespace TinyLisp
 
         private void ExecuteProgram()
         {
-            bool threadIsFree = executingThread == null || 
-                                executingThread.ThreadState != ThreadState.Running;
+            bool threadIsFree = executionThread == null || 
+                                executionThread.ThreadState != ThreadState.Running;
 
             if (rtbSource.Text.Length > 0 && threadIsFree)
             {
                 this.Text = String.Format("{0} [Выполнение программы]", APP_NAME);
                 tsbRun.Enabled = false;
                 tsbStop.Enabled = true;
-                executingThread = new Thread(new ParameterizedThreadStart(StartExecution));
-                executingThread.Start(rtbSource.Text);
+                executionThread = new Thread(new ParameterizedThreadStart(StartExecution));
+                executionThread.Start(rtbSource.Text);
             }
         }
 
@@ -129,15 +129,6 @@ namespace TinyLisp
         {
             int splitterPos = splSplitter.SplitPosition;
             SplittedSize = pnlContainer.Height - splitterPos - splSplitter.Height;
-        }
-
-        private void BindDelegates()
-        {
-            this.addTextToTextBox = AddText;
-            ShowGraphicsForm = ShowGraphics;
-            ExecutionEnded = ExecutionCompleted;
-            BeginUserInput = BeginInput;
-            BaseFunctions.Output = WriteToOutput;
         }
 
         private void InitializeEnvironment()
@@ -218,7 +209,6 @@ namespace TinyLisp
         private void frmMain_Load(object sender, EventArgs e)
         {
             this.Text = APP_NAME;
-            BindDelegates();
             InitializeEnvironment();
             InitializeColorizer();
             SaveSplittedPosition();
@@ -332,10 +322,10 @@ namespace TinyLisp
 
         private void tsbStop_Click(object sender, EventArgs e)
         {
-            if (executingThread != null && executingThread.ThreadState != ThreadState.Aborted)
+            if (executionThread != null && executionThread.ThreadState != ThreadState.Aborted)
             {
-                executingThread.Abort();
-                ExecutionEnded();
+                executionThread.Abort();
+                ExecutionCompleted();
             }
         }
 
@@ -354,5 +344,11 @@ namespace TinyLisp
             clearOutputItem_Click(null, null);
         }
         #endregion
+
+        public frmMain()
+        {
+            UI = this;
+            InitializeComponent();
+        }
     }
 }

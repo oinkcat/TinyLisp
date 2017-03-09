@@ -23,15 +23,15 @@ namespace TinyLisp.Objects
                 case "--":
                     return BaseFunctions.InverseSign(Environment, Params);
                 case "=":
-                    return BaseFunctions.ComparsionReduce(Environment, 0, 0, Params);
+                    return BaseFunctions.ComparsionReduce(Environment, new [] { 0, 0 }, Params);
                 case ">":
-                    return BaseFunctions.ComparsionReduce(Environment, 1, 1, Params);
+                    return BaseFunctions.ComparsionReduce(Environment, new [] { 1, 1 }, Params);
                 case "<":
-                    return BaseFunctions.ComparsionReduce(Environment, -1, -1, Params);
+                    return BaseFunctions.ComparsionReduce(Environment, new [] { -1, -1 }, Params);
                 case ">=":
-                    return BaseFunctions.ComparsionReduce(Environment, 1, 0, Params);
+                    return BaseFunctions.ComparsionReduce(Environment, new [] { 1, 0 }, Params);
                 case "<=":
-                    return BaseFunctions.ComparsionReduce(Environment, -1, 0, Params);
+                    return BaseFunctions.ComparsionReduce(Environment, new [] { -1, 0 }, Params);
                 case "or":
                     return BaseFunctions.LogicReduce(Environment, LogicObject.DoOr, true, Params);
                 case "and":
@@ -69,15 +69,15 @@ namespace TinyLisp.Objects
                 case "list?":
                     return BaseFunctions.IsList(Environment, Params[0].Eval(Environment, null));
                 case "abs":
-                    return BaseFunctions.SimpleMathFunction(Environment, Math.Abs, Params[0]);
+                    return BaseFunctions.ApplyMath(Environment, Math.Abs, Params[0]);
                 case "sqrt":
-                    return BaseFunctions.SimpleMathFunction(Environment, Math.Sqrt, Params[0]);
+                    return BaseFunctions.ApplyMath(Environment, Math.Sqrt, Params[0]);
                 case "log":
-                    return BaseFunctions.SimpleMathFunction(Environment, Math.Log, Params[0]);
+                    return BaseFunctions.ApplyMath(Environment, Math.Log, Params[0]);
                 case "sin":
-                    return BaseFunctions.SimpleMathFunction(Environment, Math.Sin, Params[0]);
+                    return BaseFunctions.ApplyMath(Environment, Math.Sin, Params[0]);
                 case "cos":
-                    return BaseFunctions.SimpleMathFunction(Environment, Math.Cos, Params[0]);
+                    return BaseFunctions.ApplyMath(Environment, Math.Cos, Params[0]);
                 case "random":
                     return BaseFunctions.GetRandom(Environment, Params);
                 default:

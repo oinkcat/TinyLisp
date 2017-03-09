@@ -23,7 +23,7 @@ public static class TurtlesManager
         if (GraphicForm == null || GraphicForm.Visible == false)
         {
             GraphicForm = new frmGraphics();
-            frmMain.ActiveForm.Invoke(frmMain.ShowGraphicsForm);
+            frmMain.UI.ShowGraphics();
         }
 
         CurrentTurtle = new Turtle(GraphicForm.GetGraphics());

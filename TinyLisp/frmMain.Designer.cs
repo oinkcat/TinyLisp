@@ -101,7 +101,7 @@
             // 
             this.newScriptItem.Image = global::TinyLisp.Properties.Resources.NewDocumentHS;
             this.newScriptItem.Name = "newScriptItem";
-            this.newScriptItem.Size = new System.Drawing.Size(152, 22);
+            this.newScriptItem.Size = new System.Drawing.Size(141, 22);
             this.newScriptItem.Text = "&Новый";
             this.newScriptItem.Click += new System.EventHandler(this.newScriptItem_Click);
             // 
@@ -109,7 +109,7 @@
             // 
             this.openScriptItem.Image = global::TinyLisp.Properties.Resources.openHS;
             this.openScriptItem.Name = "openScriptItem";
-            this.openScriptItem.Size = new System.Drawing.Size(152, 22);
+            this.openScriptItem.Size = new System.Drawing.Size(141, 22);
             this.openScriptItem.Text = "О&ткрыть...";
             this.openScriptItem.Click += new System.EventHandler(this.openScriptItem_Click);
             // 
@@ -117,19 +117,19 @@
             // 
             this.saveScriptItem.Image = global::TinyLisp.Properties.Resources.saveHS;
             this.saveScriptItem.Name = "saveScriptItem";
-            this.saveScriptItem.Size = new System.Drawing.Size(152, 22);
+            this.saveScriptItem.Size = new System.Drawing.Size(141, 22);
             this.saveScriptItem.Text = "Со&хранить...";
             this.saveScriptItem.Click += new System.EventHandler(this.saveScriptItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(138, 6);
             // 
             // exitItem
             // 
             this.exitItem.Name = "exitItem";
-            this.exitItem.Size = new System.Drawing.Size(152, 22);
+            this.exitItem.Size = new System.Drawing.Size(141, 22);
             this.exitItem.Text = "В&ыход";
             this.exitItem.Click += new System.EventHandler(this.exitItem_Click);
             // 

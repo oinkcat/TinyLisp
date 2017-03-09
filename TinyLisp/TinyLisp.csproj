@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TinyLisp</RootNamespace>
     <AssemblyName>TinyLisp</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -82,6 +82,7 @@
     <Compile Include="frmObjects.Designer.cs">
       <DependentUpon>frmObjects.cs</DependentUpon>
     </Compile>
+    <Compile Include="IUICallbacks.cs" />
     <Compile Include="Objects\BaseObject.cs" />
     <Compile Include="Objects\FunctionObject.cs" />
     <Compile Include="Objects\LambdaObject.cs" />
